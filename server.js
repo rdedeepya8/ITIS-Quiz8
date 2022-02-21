@@ -253,7 +253,7 @@ app.put("/report", (req, res) => {
  *              schema:
  *                type: object
  *                properties:
- *                  SEMESTER:
+ *                  SEMISTER:
  *                      type: string
  *                      example: 4Th
  *                  SECTION:
