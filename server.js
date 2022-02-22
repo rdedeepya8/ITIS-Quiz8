@@ -110,7 +110,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *         description: Could not insert
  */
 
-app.post("/report", (req, res) => {
+app.post("/report", [
+    check("CLASS", "CLASS must not be empty").isLength({
+      min: 1,
+    }),
+    check("SECTION", "SECTION must not be empty").isLength({
+      min: 1,
+    }),
+    check("ROLLID", "ROLLID must not be empty").isLength({
+      min: 1,
+    }),
+    check("GRADE", "GRADE must not be empty").isLength({
+      min: 1,
+    }),
+    check("SEMISTER", "SEMISTER must not be empty").isLength({
+        min: 1,
+      }),
+      check("CLASS_ATTENDED", "CLASS_ATTENDED must not be empty").isLength({
+        min: 1,
+      }),
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -218,7 +241,22 @@ app.get("/report", (req, res) => {
  *         description: Could not update
  */
 
-app.put("/report", (req, res) => {
+app.put("/report", [
+   
+    check("SECTION", "SECTION must not be empty").isLength({
+      min: 1,
+    }),
+    check("ROLLID", "ROLLID must not be empty").isLength({
+      min: 1,
+    }),
+    check("GRADE", "GRADE must not be empty").isLength({
+      min: 1,
+    }),
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -280,7 +318,22 @@ app.put("/report", (req, res) => {
  *         description: Could not update
  */
 
-app.patch("/reports", (req, res) => {
+app.patch("/reports", [
+    
+    check("SECTION", "SECTION must not be empty").isLength({
+      min: 1,
+    }),
+    check("ROLLID", "ROLLID must not be empty").isLength({
+      min: 1,
+    }),
+    check("SEMISTER", "SEMISTER must not be empty").isLength({
+        min: 1,
+      }),
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -336,7 +389,12 @@ app.patch("/reports", (req, res) => {
  *         description: Report not deleted
  */
 
-app.delete("/reports/:id", (req, res) => {
+app.delete("/reports/:id", [
+
+    check("id", "ROLLID must not be empty").isLength({
+      min: 1,
+    }),
+  ], (req, res) => {
     let id = req.params.id;
     getConnection()
       .then((conn) => {
